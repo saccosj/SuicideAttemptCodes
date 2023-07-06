@@ -5,9 +5,7 @@
 ############################################################
 
 
-DX_list = c("R45.851", "T71.XX2A, R45.851", "T14.91XA")
-
-SuicideAttemptCodes = function(DX_list = NULL, full = F){
+SuicideAttemptCodes = function(DX_list = NULL, full = F, group_3_big = F){
 
   if(is.null(DX_list) == F){
 
@@ -37,6 +35,20 @@ SuicideAttemptCodes = function(DX_list = NULL, full = F){
     #########import attempt defintions##########
 
     ICD = fread("R/ICD_10_Definitions.csv")
+
+    if(group_3_big == F){
+
+    #group 3 mental health disorders only depressive
+    ind = (ICD$Rule_Number == "Rule 3A" &
+             grepl("depress|Depress|bipolar|Bipolar", ICD$Code_Description)) == F
+    ICD = ICD[ind == F, ]
+
+    #group 3 injuries only wrist, forearm, neck
+    ind = (ICD$Rule_Number == "Rule 3B"&
+             grepl("Wrist|wrist|Forearm|forearm|Neck|neck", ICD$Code_Description)) == F
+    ICD = ICD[ind == F, ]
+
+    }
 
     ############################################
 
@@ -98,16 +110,25 @@ SuicideAttemptCodes = function(DX_list = NULL, full = F){
 
     if(full == T){
 
+      #convert results to dataframe
+      results = as.data.frame(results)
+
+      #provide column names
+      colnames(results) = c(definition_labels, sa_labels)
+
+      #return results
       results
 
     }else{
 
+      #return results
       results[,18]
 
     }
 
   }else{
 
+    #throw error message if codes are null
     print("Please provide list of diagnosis codes!")
 
   }
