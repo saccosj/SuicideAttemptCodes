@@ -27,9 +27,6 @@ SuicideAttemptCodes = function(DX_list = NULL, full = F, group_3_big = F){
 
     }
 
-    #import fast search to make things go quicker
-    source("R/FastSearch.R")
-
     ############################################
 
     #########import attempt defintions##########
