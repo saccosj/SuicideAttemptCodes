@@ -1,0 +1,12 @@
+Package: SuicideAttemptCodes
+Type: Package
+Title: SuicideAttemptCodes: Search for possible suicide attempts in International Classification of Diseases (ICD-10) diagnosis codes
+Version: 1.1.0
+Depends: stringr, data.table
+Imports: stringr, data.table
+Author: Shane J Sacco, Kun Chen, Robert H Aseltine
+Maintainer: Shane J Sacco <shane.sacco@uconn.edu>
+Description: This function searches for the presence/absence of possible suicide attempts as determined by three combinations of International Classification of Diseases (ICD-10) diagnosis codes.
+License: No license
+Encoding: UTF-8
+LazyData: true
