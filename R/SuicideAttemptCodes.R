@@ -37,7 +37,7 @@ SuicideAttemptCodes = function(DX_list      = NULL,
 
     ############################################
 
-    #########import attempt defintions##########
+    #########import attempt definitions##########
 
     if(big_group_3 == F){
 
@@ -122,6 +122,27 @@ SuicideAttemptCodes = function(DX_list      = NULL,
     #any attempt present
     results[,18] = results[,15] | results[,16] | results[,17]
 
+    if(debug == T){
+      
+      #check for zero attempts
+      SA_sum = sum(results[,18])
+      
+      if(SA_sum == 0) warning("The code ran as expected, but no possible attempts were detected.
+                            This could be accurate, but you might want to doublecheck the format of
+                            your data.")
+      
+      #check for length of codes
+      n = length(DX_list)
+      if(n > 10000) n = 10000
+      DX_length = nchar(DX_list[1:n])
+      if(sum(DX_length < 7) == n) warning("The code ran as expected, but the data you provided
+                                            might be incomplete codes or only one diagnosis code
+                                            per entry. Consider doublechecking the format of
+                                            your data. We only checked the first 10,000 entries.")
+      
+      
+    }
+    
     if(full_results == T){
 
       #convert results to dataframe
@@ -139,26 +160,7 @@ SuicideAttemptCodes = function(DX_list      = NULL,
       results[,18]
 
     }
-
-  }
-
-  if(debug == T){
-
-    #check for zero attempts
-    SA_sum = sum(results[,18])
-
-    if(SA_sum == 0) warning("The code ran as expected, but no possible attempts were detected.
-                            This could be accurate, but you might want to doublecheck the format of
-                            your data.")
-
-    #check for length of codes
-    DX_length = nchar(DX_list[1:10000])
-    if(sum(DX_length < 7) == 10000) warning("The code ran as expected, but the data you provided
-                                            might be incomplete codes or only one diagnosis code
-                                            per entry. Consider doublechecking the format of
-                                            your data. We only checked the first 10,000 entries.")
-
-
+    
   }
 
 }
