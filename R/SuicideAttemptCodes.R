@@ -113,8 +113,8 @@ SuicideAttemptCodes = function(DX_list      = NULL,
       n = length(DX_list)
       if(n > 10000) n = 10000
       DX_length = nchar(DX_list[1:n])
-      if(sum(DX_length <= 8) == n) warning("The code ran as expected, but the data you provided might be incomplete codes or only one diagnosis code per entry. Consider double checking the format of your data. We only checked the first 10,000 entries.")
-      
+      if(sum(DX_length <= 8) == n & length(DX_list) > 10000) warning("The code ran as expected, but the data you provided might be incomplete codes or only one diagnosis code per entry. Consider double checking the format of your data. We only checked the first 10,000 entries.")
+      if(sum(DX_length <= 8) == n & length(DX_list) <= 10000) warning("The code ran as expected, but the data you provided might be incomplete codes or only one diagnosis code per entry. Consider double checking the format of your data.")
       
     }
     
