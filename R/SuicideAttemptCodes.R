@@ -17,26 +17,6 @@ SuicideAttemptCodes = function(DX_list      = NULL,
 
   }else{
 
-    #######import packages and functions########
-
-    #import data.table for quick tables and install if needed
-    if(require("data.table") == F){
-
-      install.packages("data.table")
-      require("data.table")
-
-    }
-
-    #import stringr for string manipulation and install if needed
-    if(require("stringr") == F){
-
-      install.packages("stringr")
-      require("stringr")
-
-    }
-
-    ############################################
-
     #########import attempt definitions##########
 
     if(big_group_3 == F){
