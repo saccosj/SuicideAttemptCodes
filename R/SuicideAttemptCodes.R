@@ -107,18 +107,13 @@ SuicideAttemptCodes = function(DX_list      = NULL,
       #check for zero attempts
       SA_sum = sum(results[,18])
       
-      if(SA_sum == 0) warning("The code ran as expected, but no possible attempts were detected.
-                            This could be accurate, but you might want to doublecheck the format of
-                            your data.")
+      if(SA_sum == 0) warning("The code ran as expected, but no possible attempts were detected. This could be accurate, but you might want to double check the format of your data.")
       
       #check for length of codes
       n = length(DX_list)
       if(n > 10000) n = 10000
       DX_length = nchar(DX_list[1:n])
-      if(sum(DX_length < 7) == n) warning("The code ran as expected, but the data you provided
-                                            might be incomplete codes or only one diagnosis code
-                                            per entry. Consider doublechecking the format of
-                                            your data. We only checked the first 10,000 entries.")
+      if(sum(DX_length <= 8) == n) warning("The code ran as expected, but the data you provided might be incomplete codes or only one diagnosis code per entry. Consider double checking the format of your data. We only checked the first 10,000 entries.")
       
       
     }
