@@ -9,9 +9,11 @@ Contents of main folder###
 
 3. /R/ subfolder: contains R scripts to execute functions.
 
-4. DESCRIPTION.TXT: A basic description of the included R package.
+4. DESCRIPTION: A basic description of the included R package.
 
-5. README.TXT: a manifest of package contents, being read right now.
+5. NAMESPACE: a file to import/export required functions.
+
+6. README.TXT: a manifest of package contents, being read right now.
 
 
 ####Install SuicideAttemptCodes package###
