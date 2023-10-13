@@ -1,0 +1,7 @@
+#SuicideAttemptCodes NAMESPACE
+
+import(stringr)
+import(data.table)
+export(SuicideAttemptCodes)
+export(fast_grepl)
+
