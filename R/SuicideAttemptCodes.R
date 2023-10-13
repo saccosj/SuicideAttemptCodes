@@ -5,9 +5,17 @@
 ############################################################
 
 
-SuicideAttemptCodes = function(DX_list = NULL, full = F, group_3_big = F){
+SuicideAttemptCodes = function(DX_list      = NULL,
+                               full_results = F,
+                               big_group_3  = F,
+                               debug        = F){
 
-  if(is.null(DX_list) == F){
+  if(is.null(DX_list)){
+
+    #throw error message if codes are null
+    stop("Please provide a list of diagnosis codes!")
+
+  }else{
 
     #######import packages and functions########
 
@@ -31,7 +39,7 @@ SuicideAttemptCodes = function(DX_list = NULL, full = F, group_3_big = F){
 
     #########import attempt defintions##########
 
-    if(group_3_big == F){
+    if(big_group_3 == F){
 
     #group 3 mental health disorders only depressive
     ind = which(ICD$Rule_Number == "Rule 3A" &
@@ -56,8 +64,19 @@ SuicideAttemptCodes = function(DX_list = NULL, full = F, group_3_big = F){
 
     ######Search for definition components######
 
-    #create labels for defintion components and attempt outcomes
-    definition_labels = unique(ICD$Category)
+    #create labels for definition components and attempt outcomes
+    definition_labels = c("ICD10_suicide_code",
+                          "ICD10_poison_self_code",
+                          "ICD10_asphx_self_code",
+                          "ICD10_event_self_code",
+                          "ICD10_ideation_code",
+                          "ICD10_ideation_code",
+                          "ICD10_poison_undet_code",
+                          "ICD10_asphx_undet_code",
+                          "ICD10_event_undet_code",
+                          "ICD10_mental_code",
+                          "ICD10_sui_wound_code")
+
     sa_labels = c("SA_1_any", "SA_2_any", "SA_3_any","SA_1", "SA_2", "SA_3", "SA")
 
     #create placeholder matrix for results
@@ -103,7 +122,7 @@ SuicideAttemptCodes = function(DX_list = NULL, full = F, group_3_big = F){
     #any attempt present
     results[,18] = results[,15] | results[,16] | results[,17]
 
-    if(full == T){
+    if(full_results == T){
 
       #convert results to dataframe
       results = as.data.frame(results)
@@ -121,10 +140,24 @@ SuicideAttemptCodes = function(DX_list = NULL, full = F, group_3_big = F){
 
     }
 
-  }else{
+  }
 
-    #throw error message if codes are null
-    print("Please provide list of diagnosis codes!")
+  if(debug == T){
+
+    #check for zero attempts
+    SA_sum = sum(results[,18])
+
+    if(SA_sum == 0) warning("The code ran as expected, but no possible attempts were detected.
+                            This could be accurate, but you might want to doublecheck the format of
+                            your data.")
+
+    #check for length of codes
+    DX_length = nchar(DX_list[1:10000])
+    if(sum(DX_length < 7) == 10000) warning("The code ran as expected, but the data you provided
+                                            might be incomplete codes or only one diagnosis code
+                                            per entry. Consider doublechecking the format of
+                                            your data. We only checked the first 10,000 entries.")
+
 
   }
 
